@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"messagingApp/routes"
 	"net/http"
 )
@@ -14,6 +15,8 @@ func main() {
 
 	// Start the HTTP server on port 8080
 	fmt.Println("Server is running on port 8080")
-	http.ListenAndServe(":8080", nil)
 	http.HandleFunc("/web", routes.WebSocket)
+
+	log.Fatal(http.ListenAndServe(":8000", nil))
+
 }

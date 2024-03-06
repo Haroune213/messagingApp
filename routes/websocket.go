@@ -34,6 +34,9 @@ func WebSocket(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 			break
 		}
+
+		fmt.Println(string(message))
+
 		err = conn.WriteMessage(websocket.TextMessage, message)
 
 		if err != nil {

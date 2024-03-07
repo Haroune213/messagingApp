@@ -30,7 +30,7 @@
            
 
         <div class="fixed bottom-0 left-0 right-0 h-[60px] flex items-center justify-center bg-white flex items-center justify-center">
-            <form class="w-1/3 h-[40px] rounded-full bg-gray-300 py-3 px-4  shadow-md shadow-slate-200 flex justify-between items-center" hx-target="#message-list" onsubmit="cleanInput()" ws-send>  
+            <form class="w-1/3 h-[40px] rounded-full bg-gray-300 py-3 px-4  shadow-md shadow-slate-200 flex justify-between items-center"  onsubmit="updateInput()" ws-send>  
                 <input type="text" class="outline-none border-none bg-transparent w-[80%]"  id="message-output" name="message">   
                 <button   class="cursor-pointer"  type="submit" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
@@ -47,8 +47,15 @@
       var scrollableDiv=document.getElementById("messaging-cont");
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
 
-      function cleanInput(){
+      function updateInput(){
         const txtInput = document.getElementById("message-output")
+        const textCont= document.getElementById("message-list")
+
+        var newMessage = document.createElement("div");
+        newMessage.className = "px-4 py-2 w-fit max-w-1/2 rounded-l-full rounded-b-full mt-4 text-sm text-gray-700 text-white bg-blue-700";
+        newMessage.innerHTML = txtInput.value
+        textCont.appendChild(newMessage)
+
         setTimeout(()=>{
         txtInput.value=""}, 10)
       }

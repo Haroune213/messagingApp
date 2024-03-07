@@ -1,12 +1,31 @@
 package routes
 
 import (
-	"fmt"
-	"log"
 	"net/http"
+	"time"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 )
+
+const (
+	pingPeriod     = (pongWait * 9) / 10
+	pongWait       = 10 * time.Second
+	maxMessageSize = 512
+	writeWait      = 10 * time.Second
+)
+
+type WsMessage struct {
+	Message string      `json:"message"`
+	Headers interface{} `json:"HEADERS"`
+}
+
+type Client struct {
+	user_id string
+	hub     *Hub
+	conn    *websocket.Conn
+	send    chan []byte
+}
 
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -16,32 +35,25 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-func WebSocket(w http.ResponseWriter, r *http.Request) {
+func WebSocket(w http.ResponseWriter, r *http.Request, hub *Hub) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 
 	if err != nil {
-		log.Println(err)
 		return
 	}
-	fmt.Println("connection open")
 
-	defer conn.Close()
+	gen_id := uuid.New()
 
-	for {
-		_, message, err := conn.ReadMessage()
-
-		if err != nil {
-			log.Println(err)
-			break
-		}
-
-		fmt.Println(string(message))
-
-		err = conn.WriteMessage(websocket.TextMessage, message)
-
-		if err != nil {
-			log.Println(err)
-			break
-		}
+	client := &Client{
+		user_id: gen_id.String(),
+		hub:     hub,
+		conn:    conn,
+		send:    make(chan []byte),
 	}
+
+	client.hub.register <- client
+
+	go client.readMessage()
+	go client.writeMessage()
+
 }

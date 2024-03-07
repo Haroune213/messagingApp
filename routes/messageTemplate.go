@@ -7,7 +7,7 @@ import (
 )
 
 func getMessageTemplate(msg *Message) []byte {
-	tmpl, err := template.ParseFiles("templates/sentMessage.html")
+	tmpl, err := template.ParseFiles("templates/receivedMessage.html")
 
 	if err != nil {
 		log.Fatalf("template parsing: %s", err)

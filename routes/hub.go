@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -49,9 +48,12 @@ func (h *Hub) Run() {
 			h.RLock()
 
 			h.messages = append(h.messages, msg)
-			fmt.Println("msg: " + string(msg.Message))
 
 			for client := range h.clients {
+				if client.user_id == msg.Client_id {
+					continue
+				}
+
 				select {
 
 				case client.send <- getMessageTemplate(msg):

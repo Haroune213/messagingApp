@@ -25,6 +25,8 @@ func GetUser(email string, pswd string) (User, error) {
 		return *user, err
 	}
 
+	database.UpdateLastConnect(id)
+
 	user := &User{
 		ID:       id,
 		Username: usr,
@@ -52,6 +54,6 @@ func CreateUser(email string, username string, pswd string) (int, bool, error) {
 	return id, worked, nil
 }
 
-func DeleteUser() {}
-
-func RemoveUser() {}
+func DeleteUser(email string) {
+	database.DeleteUserValue(email)
+}

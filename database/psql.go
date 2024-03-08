@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -57,12 +58,25 @@ func GetUserValue(email string) (int, string, string, error) {
 func CreateUserValue(email string, username string, pswd string) (int, bool) {
 	var sqlId int
 
-	err := db.QueryRow(`INSERT INTO users (username, password,email)
-	VALUES ( $1, $2,$3);`, username, pswd, email)
-	fmt.Println(&err)
+	currentDateTime := time.Now()
+	formattedDateTime := currentDateTime.Format("2006-01-02 15:04:05")
+	db.QueryRow(`INSERT INTO users (username, password,email,created_at,last_conn)
+	VALUES ( $1, $2,$3,$4,$5);`, username, password, email, formattedDateTime, formattedDateTime)
+
 	getId := `select id from users WHERE username=$1 AND email=$2`
 	row := db.QueryRow(getId, username, email)
 	row.Scan(&sqlId)
-	fmt.Println("id:", sqlId)
+
 	return sqlId, true
+}
+
+func DeleteUserValue(email string) {
+	db.Exec(`DELETE FROM users WHERE email = $1;`, email)
+}
+
+func UpdateLastConnect(id int) {
+	currentDateTime := time.Now()
+	formattedDateTime := currentDateTime.Format("2006-01-02 15:04:05")
+
+	db.Exec(`UPDATE users SET last_conn = $1 WHERE id = $2;`, formattedDateTime, id)
 }

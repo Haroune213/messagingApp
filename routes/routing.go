@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"messagingApp/controllers"
 	"messagingApp/websocket"
 	"net/http"
@@ -19,7 +18,12 @@ func Routing(port string, hub *websocket.Hub) {
 	})
 
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
-		controllers.GetRegister(w, r)
+		if r.Method == "GET" {
+			controllers.GetRegister(w, r)
+		}
+		if r.Method == "POST" {
+			controllers.PostRegister(w, r)
+		}
 	})
 
 	http.HandleFunc("/messages/", func(w http.ResponseWriter, r *http.Request) {
@@ -29,8 +33,6 @@ func Routing(port string, hub *websocket.Hub) {
 	http.HandleFunc("/web", func(w http.ResponseWriter, r *http.Request) {
 		controllers.ConnectSocket(w, r, hub)
 	})
-
-	fmt.Println("conn")
 
 	http.ListenAndServe(port, nil)
 }

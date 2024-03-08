@@ -15,7 +15,7 @@ type User struct {
 }
 
 func GetUser(email string, pswd string) (User, error) {
-	id, usr, pswd, err := database.GetUser(email)
+	id, usr, pswd, err := database.GetUserValue(email)
 
 	if err != nil {
 		fmt.Println(err)
@@ -35,7 +35,22 @@ func GetUser(email string, pswd string) (User, error) {
 	return *user, nil
 }
 
-func CreateUser() {}
+func CreateUser(email string, username string, pswd string) (int, bool, error) {
+	id, _, _, err := database.GetUserValue(email)
+	if id != 0 {
+
+		fmt.Println("this step")
+		return 0, false, err
+	}
+
+	id, worked := database.CreateUserValue(email, username, pswd)
+
+	if !worked {
+		return 0, worked, nil
+	}
+
+	return id, worked, nil
+}
 
 func DeleteUser() {}
 

@@ -37,7 +37,7 @@ func OpenDB() (*sql.DB, error) {
 	return db, nil
 }
 
-func GetUser(email string) (int, string, string, error) {
+func GetUserValue(email string) (int, string, string, error) {
 	var password string
 	var id int
 	var username string
@@ -52,4 +52,17 @@ func GetUser(email string) (int, string, string, error) {
 	default:
 		return id, username, password, err
 	}
+}
+
+func CreateUserValue(email string, username string, pswd string) (int, bool) {
+	var sqlId int
+
+	err := db.QueryRow(`INSERT INTO users (username, password,email)
+	VALUES ( $1, $2,$3);`, username, pswd, email)
+	fmt.Println(&err)
+	getId := `select id from users WHERE username=$1 AND email=$2`
+	row := db.QueryRow(getId, username, email)
+	row.Scan(&sqlId)
+	fmt.Println("id:", sqlId)
+	return sqlId, true
 }

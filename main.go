@@ -9,6 +9,6 @@ func main() {
 	hub := websocket.CreateHub()
 	go hub.Run()
 
-	routes.Routing(":8080", hub)
+	routes.Routing(":8000", hub)
 
 }

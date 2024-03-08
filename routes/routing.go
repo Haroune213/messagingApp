@@ -10,7 +10,12 @@ import (
 func Routing(port string, hub *websocket.Hub) {
 
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		controllers.GetLogin(w, r)
+		if r.Method == "GET" {
+			controllers.GetLogin(w, r)
+		}
+		if r.Method == "POST" {
+			controllers.PostLogin(w, r)
+		}
 	})
 
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {

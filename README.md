@@ -1,2 +1,3 @@
 # messagingApp
-A prototype for a messaging app using golang and react
+
+A prototype for a messaging app using golang and HTMX

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -12,7 +11,13 @@ func GetLogin(w http.ResponseWriter, r *http.Request) {
 func PostLogin(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 
-	fmt.Printf("Email:\n%s", r.FormValue("email"))
-	fmt.Printf("Password:\n%s", r.FormValue("password"))
+	if r.FormValue("email") != "123@mail.com" || r.FormValue("password") != "123" {
+		http.ServeFile(w, r, "./templates/errorLogin.html")
+	}
+	if r.FormValue("email") == "123@mail.com" && r.FormValue("password") == "123" {
+		w.Header().Set("HX-Redirect", "http://localhost:8000/")
+		w.WriteHeader(http.StatusOK)
+
+	}
 
 }

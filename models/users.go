@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"messagingApp/database"
 	"time"
 )
@@ -17,7 +18,11 @@ func GetUser(email string, pswd string) (User, error) {
 	id, usr, pswd, err := database.GetUser(email)
 
 	if err != nil {
-		return User{}, err
+		fmt.Println(err)
+		user := &User{
+			ID: 0,
+		}
+		return *user, err
 	}
 
 	user := &User{

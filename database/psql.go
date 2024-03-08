@@ -36,3 +36,20 @@ func OpenDB() (*sql.DB, error) {
 
 	return db, nil
 }
+
+func GetUser(email string) (int, string, string, error) {
+	var password string
+	var id int
+	var username string
+
+	sqlStatement := `SELECT id,username,password FROM users WHERE email=$1`
+	row := db.QueryRow(sqlStatement, email)
+	switch err := row.Scan(&id, &username, &password); err {
+	case sql.ErrNoRows:
+		return 0, "", "", err
+	case nil:
+		return id, username, password, err
+	default:
+		return id, username, password, err
+	}
+}

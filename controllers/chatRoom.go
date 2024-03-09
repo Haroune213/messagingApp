@@ -1,8 +1,18 @@
 package controllers
 
-import "net/http"
+import (
+	"messagingApp/middlewares"
+	"net/http"
+)
 
 func GetChatRoom(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./templates/index.html")
+	_, id := middlewares.FilterUser(w, r)
 
+	switch id {
+	case 0:
+		http.Redirect(w, r, "http://localhost:8000/login", http.StatusSeeOther)
+	default:
+		http.ServeFile(w, r, "./templates/index.html")
+
+	}
 }

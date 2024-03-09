@@ -5,7 +5,7 @@ import (
 )
 
 type Message struct {
-	Client_id string `json:"clientID"`
+	Client_id int    `json:"clientID"`
 	Message   string `json:"text"`
 }
 

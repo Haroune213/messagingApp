@@ -20,8 +20,8 @@ func GetRegister(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostRegister(w http.ResponseWriter, r *http.Request) {
-	_, id := middlewares.FilterUser(w, r)
-	if id != 0 {
+	_, jwtId := middlewares.FilterUser(w, r)
+	if jwtId == 0 {
 
 		id, exist, err := models.CreateUser(r.FormValue("email"), r.FormValue("username"), r.FormValue("password"))
 
@@ -29,6 +29,7 @@ func PostRegister(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("err: ", err, " exist: ", exist, " id: ", id)
 			http.ServeFile(w, r, "./templates/errorRegister.html")
 		} else {
+			middlewares.CreateJWT(id, r.FormValue("username"), r.FormValue("email"), w, r)
 			w.Header().Set("HX-Redirect", "http://localhost:8000/")
 			w.WriteHeader(http.StatusOK)
 		}

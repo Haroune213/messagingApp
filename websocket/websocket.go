@@ -1,10 +1,10 @@
 package websocket
 
 import (
+	"messagingApp/middlewares"
 	"net/http"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 )
 
@@ -21,7 +21,7 @@ type WsMessage struct {
 }
 
 type Client struct {
-	user_id string
+	user_id int
 	hub     *Hub
 	conn    *websocket.Conn
 	send    chan []byte
@@ -36,16 +36,15 @@ var upgrader = websocket.Upgrader{
 }
 
 func WebSocket(w http.ResponseWriter, r *http.Request, hub *Hub) {
+	_, _, id := middlewares.VerifyJWT(w, r)
 	conn, err := upgrader.Upgrade(w, r, nil)
 
 	if err != nil {
 		return
 	}
 
-	gen_id := uuid.New()
-
 	client := &Client{
-		user_id: gen_id.String(),
+		user_id: id,
 		hub:     hub,
 		conn:    conn,
 		send:    make(chan []byte),

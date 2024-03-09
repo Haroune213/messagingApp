@@ -26,7 +26,7 @@ func Routing(port string, hub *websocket.Hub) {
 		}
 	})
 
-	http.HandleFunc("/messages/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		controllers.GetChatRoom(w, r)
 	})
 

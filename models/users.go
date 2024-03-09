@@ -10,12 +10,12 @@ type User struct {
 	ID       int
 	Username string
 	Email    string
-	Password string
 	LastConn time.Time
 }
 
 func GetUser(email string, pswd string) (User, error) {
-	id, usr, pswd, err := database.GetUserValue(email)
+
+	id, usr, err := database.GetUserValue(email)
 
 	if err != nil {
 		fmt.Println(err)
@@ -30,7 +30,7 @@ func GetUser(email string, pswd string) (User, error) {
 	user := &User{
 		ID:       id,
 		Username: usr,
-		Password: pswd,
+		Email:    email,
 		LastConn: time.Now(),
 	}
 
@@ -38,7 +38,7 @@ func GetUser(email string, pswd string) (User, error) {
 }
 
 func CreateUser(email string, username string, pswd string) (int, bool, error) {
-	id, _, _, err := database.GetUserValue(email)
+	id, _, err := database.GetUserValue(email)
 	if id != 0 {
 
 		fmt.Println("this step")

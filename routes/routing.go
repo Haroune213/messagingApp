@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"fmt"
 	"messagingApp/controllers"
 	"messagingApp/websocket"
 	"net/http"
+	"strings"
 )
 
 func Routing(port string, hub *websocket.Hub) {
@@ -26,7 +28,9 @@ func Routing(port string, hub *websocket.Hub) {
 		}
 	})
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/web/", func(w http.ResponseWriter, r *http.Request) {
+		id := extractID(r.URL.Path)
+		fmt.Println(id)
 		controllers.GetChatRoom(w, r)
 	})
 
@@ -35,4 +39,15 @@ func Routing(port string, hub *websocket.Hub) {
 	})
 
 	http.ListenAndServe(port, nil)
+}
+
+func extractID(path string) string {
+	parts := strings.Split(path, "/")
+
+	for i, part := range parts {
+		if part == "web" && i+1 < len(parts) {
+			return parts[i+1]
+		}
+	}
+	return ""
 }

@@ -22,6 +22,22 @@ func GetUserValue(email string) (int, string, error) {
 	}
 }
 
+func GetUserById(id int) (string, time.Time, error) {
+	var last_conn time.Time
+	var username string
+
+	sqlStatement := `SELECT id,username,last_conn FROM users WHERE id=$1`
+	row := db.QueryRow(sqlStatement, id)
+	switch err := row.Scan(&username, &last_conn); err {
+	case sql.ErrNoRows:
+		return "", time.Now(), err
+	case nil:
+		return username, last_conn, err
+	default:
+		return username, last_conn, err
+	}
+}
+
 func CreateUserValue(email string, username string, pswd string) (int, bool) {
 	var sqlId int
 

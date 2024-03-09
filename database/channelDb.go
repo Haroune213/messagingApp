@@ -1,6 +1,9 @@
 package database
 
-import "database/sql"
+import (
+	"database/sql"
+	"fmt"
+)
 
 func GetChannelValue(channel_id string, user_id int) int {
 	var usr_1, usr_2, target int
@@ -17,7 +20,27 @@ func GetChannelValue(channel_id string, user_id int) int {
 		if user_id == usr_2 {
 			target = usr_1
 		}
+		if user_id != usr_1 && user_id != usr_2 {
+			target = 0
+		}
 	}
 
 	return target
+}
+
+func CreateChannelValue(user1 int, user2 int) string {
+	var id string
+
+	err := db.QueryRow(`INSERT INTO message_channel (user1, user2)
+	VALUES ( $1, $2);`, user1, user2)
+
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	getId := `select id from message_channel WHERE user1=$1 AND user2=$2`
+	row := db.QueryRow(getId, user1, user2)
+	row.Scan(&id)
+
+	return id
 }

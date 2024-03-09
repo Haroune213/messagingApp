@@ -11,7 +11,7 @@
 
 </head>
 <body> 
-    <section class="w-[100vw] h-[100vh] relative overflow-x-hidden " id="messaging-section" hx-ext="ws" ws-connect="/web" >
+    <section class="w-[100vw] h-[100vh] relative overflow-x-hidden " id="messaging-section" hx-ext="ws" ws-connect="/web"  >
         <nav class="w-full h-[55px] shadow-md shadow-slate-200 px-4 py-1 flex justify-center items-center fixed top-0 bg-white z-10">
             <div>
                 Haroune You <br>
@@ -47,10 +47,13 @@
       var scrollableDiv=document.getElementById("messaging-cont");
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
 
+      function updateSroll(){
+        scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+      }
+
       function updateInput(){
         const txtInput = document.getElementById("message-output")
         const textCont= document.getElementById("message-list")
-
         var newMessage = document.createElement("div");
         newMessage.className = "px-4 py-2 w-fit max-w-1/2 rounded-l-full rounded-b-full mt-4 text-sm text-gray-700 text-white bg-blue-700";
         newMessage.innerHTML = txtInput.value
@@ -58,6 +61,8 @@
 
         setTimeout(()=>{
         txtInput.value=""}, 10)
+        updateSroll()
+
       }
      </script>
 </body>

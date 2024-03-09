@@ -26,7 +26,7 @@ func GetUserById(id int) (string, time.Time, error) {
 	var last_conn time.Time
 	var username string
 
-	sqlStatement := `SELECT id,username,last_conn FROM users WHERE id=$1`
+	sqlStatement := `SELECT username,last_conn FROM users WHERE id=$1`
 	row := db.QueryRow(sqlStatement, id)
 	switch err := row.Scan(&username, &last_conn); err {
 	case sql.ErrNoRows:

@@ -11,12 +11,14 @@ import (
 
 func GetChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 	_, id := middlewares.FilterUser(w, r)
-
+	fmt.Println("user id: ", id)
 	switch id {
 	case 0:
 		http.Redirect(w, r, "http://localhost:8000/login", http.StatusSeeOther)
 	default:
+		fmt.Println("url: ", url, " , id: ", id)
 		val, exist := models.GetChannel(url, id)
+		fmt.Println(val, exist)
 		if exist {
 			tmpl, err := template.ParseFiles("./templates/index.html")
 			if err != nil {
@@ -35,12 +37,14 @@ func GetOrCreateChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 
 	if id != 0 {
 		target, err := database.GetUserByName(url)
+		fmt.Println("target id: ", target.ID)
 
 		if err != nil {
 			fmt.Println(err)
 		}
 
 		link := models.CreateChannel(id, target.ID)
+		fmt.Println("link: ", link)
 
 		newUrl := "http://localhost:8000/web/" + link
 

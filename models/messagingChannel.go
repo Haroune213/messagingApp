@@ -14,12 +14,12 @@ func GetChannel(channel_id string, user_id int) (structs.User, bool) {
 
 	}
 	if target != 0 {
-		username, last_conn, err := database.GetUserById(target)
+		username, err := database.GetUserById(target)
 		if err != nil {
 			return *target_user, false
 		}
 
-		target_user = &structs.User{Username: username, LastConn: last_conn}
+		target_user = &structs.User{Username: username}
 	}
 	return *target_user, true
 }

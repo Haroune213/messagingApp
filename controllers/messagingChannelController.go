@@ -16,9 +16,7 @@ func GetChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 	case 0:
 		http.Redirect(w, r, "http://localhost:8000/login", http.StatusSeeOther)
 	default:
-		fmt.Println("url: ", url, " , id: ", id)
 		val, exist := models.GetChannel(url, id)
-		fmt.Println(val, exist)
 		if exist {
 			tmpl, err := template.ParseFiles("./templates/index.html")
 			if err != nil {

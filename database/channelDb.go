@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"messagingApp/structs"
 )
 
 func GetChannelValue(channel_id string, user_id int) int {
@@ -25,6 +26,39 @@ func GetChannelValue(channel_id string, user_id int) int {
 	}
 
 	return target
+}
+
+func GetChannelsList(user_id int) []structs.Message_channel {
+	var channels []structs.Message_channel
+	rows, err := db.Query("SELECT id, user1,user2 FROM message_channel WHERE user1= $1 OR user2= $1 ORDER BY creation_date DESC LIMIT 10;", user_id)
+
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var channel structs.Message_channel
+		var usr1, usr2 int
+		err := rows.Scan(&channel.ID, &usr1, &usr2)
+		if usr1 == user_id {
+			channel.Target_id = usr2
+		}
+		if usr2 == user_id {
+			channel.Target_id = usr1
+		}
+
+		if err != nil {
+			panic(err)
+		}
+		channels = append(channels, channel)
+	}
+	if err := rows.Err(); err != nil {
+		panic(err)
+	}
+
+	return channels
+
 }
 
 func CreateChannelValue(user1 int, user2 int) string {

@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"messagingApp/structs"
 	"time"
 )
 
@@ -36,6 +37,29 @@ func GetUserById(id int) (string, time.Time, error) {
 	default:
 		return username, last_conn, err
 	}
+}
+
+func GetUsersByName(user string) []structs.User {
+	var users []structs.User
+	rows, err := db.Query("SELECT id, username FROM users WHERE username LIKE $1", user)
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var user structs.User
+		err := rows.Scan(&user.ID, &user.Username)
+		if err != nil {
+			panic(err)
+		}
+		users = append(users, user)
+	}
+	if err := rows.Err(); err != nil {
+		panic(err)
+	}
+
+	return users
 }
 
 func CreateUserValue(email string, username string, pswd string) (int, bool) {

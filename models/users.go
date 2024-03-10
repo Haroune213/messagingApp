@@ -3,23 +3,17 @@ package models
 import (
 	"fmt"
 	"messagingApp/database"
+	"messagingApp/structs"
 	"time"
 )
 
-type User struct {
-	ID       int
-	Username string
-	Email    string
-	LastConn time.Time
-}
-
-func GetUser(email string, pswd string) (User, error) {
+func GetUser(email string, pswd string) (structs.User, error) {
 
 	id, usr, err := database.GetUserValue(email)
 
 	if err != nil {
 		fmt.Println(err)
-		user := &User{
+		user := &structs.User{
 			ID: 0,
 		}
 		return *user, err
@@ -27,7 +21,7 @@ func GetUser(email string, pswd string) (User, error) {
 
 	database.UpdateLastConnect(id)
 
-	user := &User{
+	user := &structs.User{
 		ID:       id,
 		Username: usr,
 		Email:    email,
@@ -40,8 +34,6 @@ func GetUser(email string, pswd string) (User, error) {
 func CreateUser(email string, username string, pswd string) (int, bool, error) {
 	id, _, err := database.GetUserValue(email)
 	if id != 0 {
-
-		fmt.Println("this step")
 		return 0, false, err
 	}
 

@@ -1,12 +1,12 @@
 package models
 
 import (
-	"fmt"
 	"messagingApp/database"
+	"messagingApp/structs"
 )
 
-func GetChannel(channel_id string, user_id int) (User, bool) {
-	target_user := &User{}
+func GetChannel(channel_id string, user_id int) (structs.User, bool) {
+	target_user := &structs.User{}
 
 	target := database.GetChannelValue(channel_id, user_id)
 	if target == 0 {
@@ -16,11 +16,10 @@ func GetChannel(channel_id string, user_id int) (User, bool) {
 	if target != 0 {
 		username, last_conn, err := database.GetUserById(target)
 		if err != nil {
-			fmt.Println(err)
 			return *target_user, false
 		}
 
-		target_user = &User{Username: username, LastConn: last_conn}
+		target_user = &structs.User{Username: username, LastConn: last_conn}
 	}
 	return *target_user, true
 }

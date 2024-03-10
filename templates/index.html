@@ -13,9 +13,12 @@
 <body class="flex justify-between"> 
 
     <section class="w-[20vw] h-[100vh] z-20" style="box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.1);">
-        <form class="mt-4 h-[50px] flex flex-col justify-center items-center" action="">
-            <input class="rounded-full outline-none px-4 py-2 bg-gray-100" type="search" placeholder="Search for users">
+        <form class="mt-4 h-[50px] flex flex-col justify-center items-center" action="" hx-trigger="keydown" hx-post="/search" hx-target="#target">
+            <input class="rounded-full outline-none px-4 py-2 bg-gray-100" type="search" placeholder="Search for users" name="username">
         </form>
+        <div class="rounded-lg mt-2 flex flex-col items-center bg-gray-100 mx-2"  id="search-result" hx-swap="beforeend" hx-swap-oob="beforeend">
+
+        </div>
 
     </section>    
 
@@ -51,7 +54,7 @@
 
     </section>
     
-
+    <div id="target"></div>
     <script>
       var scrollableDiv=document.getElementById("messaging-cont");
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;

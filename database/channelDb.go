@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 )
 
 func GetChannelValue(channel_id string, user_id int) int {
@@ -14,7 +13,6 @@ func GetChannelValue(channel_id string, user_id int) int {
 	case sql.ErrNoRows:
 		target = 0
 	case nil:
-		fmt.Println(usr_1, usr_2, user_id)
 		if user_id == usr_1 {
 			target = usr_2
 		}

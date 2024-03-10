@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"messagingApp/api"
 	"messagingApp/controllers"
 	"messagingApp/websocket"
 	"net/http"
@@ -24,6 +25,12 @@ func Routing(port string, hub *websocket.Hub) {
 		}
 		if r.Method == "POST" {
 			controllers.PostRegister(w, r)
+		}
+	})
+
+	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "POST" {
+			api.SearchUser(r.FormValue("username"), w)
 		}
 	})
 

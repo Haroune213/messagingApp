@@ -22,6 +22,19 @@
 
         <div class="w-full h-fit" id="contact-list"  hx-swap="beforeend" hx-swap-oob="beforeend">
 
+            {{range .Contacts}}
+            <a class="w-full px-3 py-4 flex items-center justify-start gap-x-4 border-t border-b cursor-pointer hover:bg-gray-100 transition-all" href="http://localhost:8000/web/{{   .ID   }}">
+                <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+                <div class="relative w-[75%]">
+                 <span class="font-bold text-[12px]">{{  .Target_user  }}</span>
+                 <br>
+                 <span class="font-semibold text-[12px]">Vous: </span> <span class=" text-[12px] font-medium text-gray-500"> how do you know heow</span> <span class="absolute right-0 top-1 text-xs text-gray-500 font-medium">2022-03-2 </span>
+         
+                </div>
+             </a>
+
+            {{end}}
+
         </div>
     </section>    
 
@@ -29,7 +42,7 @@
     <section class="w-[80vw] h-[100vh]  overflow-x-hidden  relative" id="messaging-section" hx-ext="ws" ws-connect="/web"  >
         <nav class="w-[100%] h-[55px] shadow-md shadow-slate-200  py-1 flex justify-center items-center  left-0 right-0 top-0 bg-white z-10">
             <div>
-                {{ .Username }} <br>
+                {{ .User.Username }} <br>
                 <div class="w-[10px] h-[10px] rounded-full bg-green-500 animate-pulse mr-3 inline-block"></div>
                 <span class="inner-block text-sm text-gray-700 font-medium">Active</span>
             </div>

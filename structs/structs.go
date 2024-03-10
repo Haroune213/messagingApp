@@ -17,3 +17,8 @@ type Message_channel struct {
 	Last_user    int
 	Last_date    time.Time
 }
+
+type ChannelPage struct {
+	User     User
+	Contacts []Message_channel
+}

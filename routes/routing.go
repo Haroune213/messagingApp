@@ -50,7 +50,6 @@ func Routing(port string, hub *websocket.Hub) {
 		url := extractID("web", r.URL.Path)
 		controllers.GetChatRoom(w, r, url)
 
-		api.SideBarContact(w, r)
 	})
 
 	http.HandleFunc("/web", func(w http.ResponseWriter, r *http.Request) {

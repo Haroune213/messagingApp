@@ -3,9 +3,11 @@ package controllers
 import (
 	"fmt"
 	"html/template"
+	"messagingApp/api"
 	"messagingApp/database"
 	"messagingApp/middlewares"
 	"messagingApp/models"
+	"messagingApp/structs"
 	"net/http"
 )
 
@@ -22,7 +24,15 @@ func GetChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
-			tmpl.Execute(w, val)
+
+			contacts := api.SideBarContact(id)
+
+			pageData := &structs.ChannelPage{
+				User:     val,
+				Contacts: contacts,
+			}
+
+			tmpl.Execute(w, pageData)
 		} else {
 			http.Redirect(w, r, "http://localhost:8000/404", http.StatusSeeOther)
 

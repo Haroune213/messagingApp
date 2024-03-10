@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"messagingApp/api"
 	"messagingApp/controllers"
 	"messagingApp/websocket"
@@ -34,8 +35,19 @@ func Routing(port string, hub *websocket.Hub) {
 		}
 	})
 
+	http.HandleFunc("/create/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("active")
+		if r.Method == "GET" {
+
+			url := extractID("create", r.URL.Path)
+			fmt.Println(url)
+			controllers.GetOrCreateChatRoom(w, r, url)
+		}
+
+	})
+
 	http.HandleFunc("/web/", func(w http.ResponseWriter, r *http.Request) {
-		url := extractID(r.URL.Path)
+		url := extractID("web", r.URL.Path)
 		controllers.GetChatRoom(w, r, url)
 	})
 
@@ -46,11 +58,11 @@ func Routing(port string, hub *websocket.Hub) {
 	http.ListenAndServe(port, nil)
 }
 
-func extractID(path string) string {
+func extractID(prefix string, path string) string {
 	parts := strings.Split(path, "/")
 
 	for i, part := range parts {
-		if part == "web" && i+1 < len(parts) {
+		if part == prefix && i+1 < len(parts) {
 			return parts[i+1]
 		}
 	}

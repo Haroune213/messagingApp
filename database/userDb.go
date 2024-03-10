@@ -39,6 +39,19 @@ func GetUserById(id int) (string, time.Time, error) {
 	}
 }
 
+func GetUserByName(username string) (structs.User, error) {
+	var user structs.User
+	row := db.QueryRow(`SELECT id FROM users WHERE username=$1`, username)
+	switch err := row.Scan(&user.ID); err {
+	case sql.ErrNoRows:
+		return user, err
+	case nil:
+		return user, nil
+	default:
+		return user, nil
+	}
+}
+
 func GetUsersByName(user string) []structs.User {
 	var users []structs.User
 	rows, err := db.Query("SELECT id, username FROM users WHERE username ILIKE $1 LIMIT 10;", user+"%")

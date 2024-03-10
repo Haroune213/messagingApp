@@ -2,7 +2,6 @@ package api
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"log"
 	"messagingApp/database"
@@ -24,8 +23,6 @@ func displayUserTemplate(usr structs.User, w http.ResponseWriter) []byte {
 	if err != nil {
 		log.Fatalf("template parsing: %s", err)
 	}
-
-	fmt.Println("usr:", usr.Username)
 
 	var renderedUsr bytes.Buffer
 

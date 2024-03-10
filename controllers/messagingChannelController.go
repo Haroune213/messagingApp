@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"html/template"
+	"messagingApp/database"
 	"messagingApp/middlewares"
 	"messagingApp/models"
 	"net/http"
@@ -26,4 +28,24 @@ func GetChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 
 		}
 	}
+}
+
+func GetOrCreateChatRoom(w http.ResponseWriter, r *http.Request, url string) {
+	_, id := middlewares.FilterUser(w, r)
+
+	if id != 0 {
+		target, err := database.GetUserByName(url)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		link := models.CreateChannel(id, target.ID)
+
+		newUrl := "http://localhost:8000/web/" + link
+
+		http.Redirect(w, r, newUrl, http.StatusSeeOther)
+
+	}
+
 }

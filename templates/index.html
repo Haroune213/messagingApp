@@ -13,8 +13,8 @@
 <body class="flex justify-between"> 
 
     <section class="w-[20vw] h-[100vh] z-20" style="box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.1);">
-        <form class="mt-4 h-[50px] flex flex-col justify-center items-center" action="" hx-trigger="keydown" hx-post="/search" hx-target="#target">
-            <input class="rounded-full outline-none px-4 py-2 bg-gray-100" type="search" placeholder="Search for users" name="username">
+        <form class="mt-4 h-[50px] flex flex-col justify-center items-center"  action="" hx-trigger="keydown delay:0.01s" hx-post="/search" hx-target="#target" onkeydown="cleanSearchResult()" onsubmit="preventSubmit(event)">
+            <input class="rounded-full outline-none px-4 py-2 bg-gray-100" type="search" placeholder="Search for users" name="username" autocomplete="off">
         </form>
         <div class="rounded-lg mt-2 flex flex-col items-center bg-gray-100 mx-2"  id="search-result" hx-swap="beforeend" hx-swap-oob="beforeend">
 
@@ -42,7 +42,7 @@
            
 
         <div class="absolute bottom-0 left-0 right-0 h-[60px] bg-white flex items-center justify-center">
-            <form class="w-[70%] h-[40px] rounded-full bg-gray-300 py-3 px-4  shadow-md shadow-slate-200 flex justify-between items-center"  onsubmit="updateInput()" ws-send>  
+                <form class="w-[70%] h-[40px] rounded-full bg-gray-300 py-3 px-4  shadow-md shadow-slate-200 flex justify-between items-center"  onsubmit="updateInput()" ws-send>  
                 <input type="text" class="outline-none border-none bg-transparent w-[80%]"  id="message-output" name="message">   
                 <button   class="cursor-pointer"  type="submit" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"  viewBox="0 0 16 16">
@@ -58,7 +58,6 @@
     <script>
       var scrollableDiv=document.getElementById("messaging-cont");
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
-
       function updateSroll(){
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
       }
@@ -70,12 +69,23 @@
         newMessage.className = "px-4 py-2 w-fit max-w-1/2 rounded-l-full rounded-b-full mt-4 text-sm text-gray-700 text-white bg-blue-700";
         newMessage.innerHTML = txtInput.value
         textCont.appendChild(newMessage)
+    }
+
+    function cleanSearchResult(){
+        const searchResult =document.getElementById("search-result")
+        searchResult.innerHTML=""
+    }
+
+    function preventSubmit(event){
+        event.preventDefault()
+    }
 
         setTimeout(()=>{
         txtInput.value=""}, 10)
-        updateSroll()
+    
+    updateSroll()
 
-      }
+    
      </script>
 </body>
 </html>

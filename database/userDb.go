@@ -41,7 +41,7 @@ func GetUserById(id int) (string, time.Time, error) {
 
 func GetUsersByName(user string) []structs.User {
 	var users []structs.User
-	rows, err := db.Query("SELECT id, username FROM users WHERE username LIKE $1", user)
+	rows, err := db.Query("SELECT id, username FROM users WHERE username ILIKE $1 LIMIT 10;", user+"%")
 	if err != nil {
 		panic(err)
 	}

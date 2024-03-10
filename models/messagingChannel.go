@@ -29,3 +29,7 @@ func CreateChannel(user1 int, user2 int) string {
 
 	return channel_id
 }
+
+func sideBarContact(channel_id string, user_id int) {
+
+}

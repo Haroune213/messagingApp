@@ -7,14 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
-<body>
-    <div class="w-full py-2 px-2 flex justify-center items-center">
-        <form class="w-1/2 mt-4 h-[50px] flex flex-col justify-center items-center"  action="" hx-trigger="keydown delay:0.01s" hx-post="/search" hx-target="#target" onkeydown="cleanSearchResult()" onsubmit="preventSubmit(event)">
-            <input class="w-full rounded-full outline-none px-8 py-3 bg-gray-100" type="search" placeholder="Search for users" name="username" autocomplete="off">
+<body class="overflow-x-hidden relative">
+    <div class="w-full px-8 h-[80px] flex justify-between items-center shadow-md shadow-slate-200 fixed top-0 left-0 bg-white z-10">
+        <div class="w-1/4"></div>
+        <form class="w-1/2 h-[50px] flex flex-col justify-center items-center"  action="" hx-trigger="keydown delay:0.01s" hx-post="/search" hx-target="#target" onkeydown="cleanSearchResult()" onsubmit="preventSubmit(event)">
+            <input class="w-full rounded-full outline-none px-8 py-3 bg-gray-200" type="search" placeholder="Search for users" name="username" autocomplete="off">
         </form>
+
+        <div class=" flex justify-end items-center gap-x-3 cursor-pointer w-1/4"  onclick="alert('ok')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-chevron-right stroke-1" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+              </svg>
+            <span>Hawaw you</span>
+            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQApgMBIgACEQEDEQH/xAAbAAEBAAMBAQEAAAAAAAAAAAAABQEEBgMCB//EADMQAQACAQICBA0EAwAAAAAAAAABAgMEEQUhEjFBURMVIjI0U2FxcpGhwdFCUoGxIzPw/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAECA//EABcRAQEBAQAAAAAAAAAAAAAAAAABESH/2gAMAwEAAhEDEQA/AP0QB0ZAAAAAAANxQNwQAAAAAAABnfZgAAAAAAADt2FDheijNeMuWJ6FZ5R3ylqvHS6DPqOe0Ur+6zfx8IxRH+TJNvdyU4jaIiIIZ1U63CNP2WvH8tbUcJyUjfDfp+zbmtsGo5W1bUtNbRMTHZMPlf4lo41GPp05ZKxy9qB742alABUAAAAAAAAAAAAZpE3vFY65naHUYccYsVaR+mNnP8NxxfW49+zm6OGK0ywyIMDIDEwgcWweC1W8R5N43h0CVxysTjx37YtssEcgGogAqAAAAAAAAAANvhHp1PdP9Ohcxpb+C1GO/dPN08TyYrTICAAAm8b9Fr8f2UkXjuTe+OkT5sdKYWCZPUQb7kNRABUAAAAAAAAAAJ6l3hOqjLgjHafLpG3OeuEJ94slsOSuSnnQzVdUNTR67HqKRvMVvHXVtsqA882bHirM3vEfyBqMtcGKcl55Q5rPktmy2vbrmXvxDWTqr7V5Y46o7/a1GpENgGkAAAAAAAAAAAfeLDkzW2xUmwr4ZUcPCMlo3y5Ir7IjdsRwfFtzy3+UM6Ir2x6zUYo6NMtoj281TxNh9bk+n4PEuD1uT6fhOCbfX6q0beGn5Q8JtNpmbTMzPbKz4lw+tyfT8HiXB63J9PwaIoszwbF2Zcn87S878GtHm5on31a0ShtZuH6nFznHNojtrzavfuugAIAAAAAAA3+FaTw95yXjyKzy9qWqaDh855i+WJrjjs7ZW8eOmOsVpWKxHc+ojaGWd1QBAAAAAAAaus0OPU13mOjk7LRDaActnw30+XweSNp7J73m6TXaWuqwzWdulHmz3S5y0TW01tG0xO0x3NyowAqAAAAr6xUtkyVpXrtO0Om02Gunw1x06oj5o/BcUX1Nsk/ojl75XWKoAgAAAAAAAAAAInGsEUy1zVjaL8re9baHGadLRWn9tolYIIQNsgAAALHAY8jNbvmI/wC+aqmcC9HyfH9oU2K0AIAAAAAAAAAADV4nG+hzfC2mtxH0HP8ABIOcYIHRAAQABa4F/oy/H9oUwc60AAAAAAAAAAAAxLy1kb6TNE/sn+mQHLwA6IACP//Z" alt="" class="rounded-full w-10 h-10 shadow-md image">
+        </div>
     </div>
 
-    <section class="w-full flex flex-col items-center">
+    <section class="w-full flex flex-col items-center mt-[75px]">
         {{range .Contacts}}
         <a class="w-1/2 px-3 py-4 flex items-center justify-start gap-x-4 border-t border-b cursor-pointer hover:bg-gray-100 transition-all" href="http://localhost:8000/web/{{   .ID   }}">
             <div class="w-10 h-10 rounded-full bg-gray-300"></div>

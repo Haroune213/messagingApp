@@ -23,6 +23,12 @@
         </div>
     </div>
 
+    <div class="fixed top-[100px] right-[25px] w-[200px] h-fit shadow-md shadow-slate-200 rounded-lg border border-slate-300 flex flex-col  px-3">
+        <a href="" class=" py-3 cursor-pointer hover:bg-gray-100 transition-all">Profile</a>
+        <a href="" class="border-t border-slate-300 py-3 cursor-pointer hover:bg-gray-100 transition-all">Settings</a>
+        <div class="border-t border-slate-300 py-3 cursor-pointer hover:bg-gray-100 transition-all">Logout</div>
+    </div>
+
     <section class="w-full flex flex-col items-center mt-[75px]">
         {{range .Contacts}}
         <a class="w-1/2 px-3 py-4 flex items-center justify-start gap-x-4 border-t border-b cursor-pointer hover:bg-gray-100 transition-all" href="http://localhost:8000/web/{{   .ID   }}">

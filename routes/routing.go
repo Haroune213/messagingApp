@@ -46,6 +46,11 @@ func Routing(port string, hub *websocket.Hub) {
 
 	})
 
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		controllers.GetHomePage(w, r)
+
+	})
+
 	http.HandleFunc("/web/", func(w http.ResponseWriter, r *http.Request) {
 		url := extractID("web", r.URL.Path)
 		controllers.GetChatRoom(w, r, url)

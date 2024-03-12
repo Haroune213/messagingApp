@@ -11,9 +11,31 @@ import (
 	"net/http"
 )
 
+func GetHomePage(w http.ResponseWriter, r *http.Request) {
+	_, id := middlewares.FilterUser(w, r)
+
+	switch id {
+	case 0:
+		http.Redirect(w, r, "http://localhost:8000/login", http.StatusSeeOther)
+	default:
+		tmpl, err := template.ParseFiles("./templates/homepage.html")
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
+		contacts := api.SideBarContact(id)
+
+		pageData := &structs.ChannelPage{
+			User:     structs.User{},
+			Contacts: contacts,
+		}
+
+		tmpl.Execute(w, pageData)
+	}
+}
+
 func GetChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 	_, id := middlewares.FilterUser(w, r)
-	fmt.Println("user id: ", id)
 	switch id {
 	case 0:
 		http.Redirect(w, r, "http://localhost:8000/login", http.StatusSeeOther)

@@ -72,6 +72,8 @@
     
     <div id="target"></div>
     <script>
+     const txtInput = document.getElementById("message-output")
+      const textCont= document.getElementById("message-list")
       var scrollableDiv=document.getElementById("messaging-cont");
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
       function updateSroll(){
@@ -79,12 +81,11 @@
       }
 
       function updateInput(){
-        const txtInput = document.getElementById("message-output")
-        const textCont= document.getElementById("message-list")
         var newMessage = document.createElement("div");
         newMessage.className = "px-4 py-2 w-fit max-w-1/2 rounded-l-full rounded-b-full mt-4 text-sm text-gray-700 text-white bg-blue-700";
         newMessage.innerHTML = txtInput.value
         textCont.appendChild(newMessage)
+        txtInput.value=""
     }
 
     function cleanSearchResult(){

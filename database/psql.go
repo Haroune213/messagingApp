@@ -32,7 +32,6 @@ func OpenDB() (*sql.DB, error) {
 		log.Fatal(err)
 		return nil, err
 	}
-	fmt.Println("Connected to the database")
 
 	return db, nil
 }

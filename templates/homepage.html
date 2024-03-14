@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+    crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
@@ -14,8 +16,8 @@
             <input class="w-full rounded-full outline-none px-8 py-3 bg-gray-200" type="search" placeholder="Search for users" name="username" autocomplete="off">
         </form>
 
-        <div class=" flex justify-end items-center gap-x-3 cursor-pointer w-1/4"  onclick="alert('ok')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-chevron-right stroke-1" viewBox="0 0 16 16">
+        <div class=" flex justify-end items-center gap-x-3 cursor-pointer w-1/4"  onclick="toggleSetting()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-chevron-right stroke-3 transition-all" viewBox="0 0 16 16" id="chevron">
                 <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
               </svg>
             <span>Hawaw you</span>
@@ -23,10 +25,14 @@
         </div>
     </div>
 
-    <div class="fixed top-[100px] right-[25px] w-[200px] h-fit shadow-md shadow-slate-200 rounded-lg border border-slate-300 flex flex-col  px-3">
+    <div class="fixed top-[100px] right-[25px] w-[200px] h-fit shadow-md shadow-slate-200 rounded-lg border border-slate-300 flex flex-col  px-3 hidden transition-all" id="setting-tab">
         <a href="" class=" py-3 cursor-pointer hover:bg-gray-100 transition-all">Profile</a>
         <a href="" class="border-t border-slate-300 py-3 cursor-pointer hover:bg-gray-100 transition-all">Settings</a>
         <div class="border-t border-slate-300 py-3 cursor-pointer hover:bg-gray-100 transition-all">Logout</div>
+    </div>
+
+    <div class="rounded-lg mt-2 flex flex-col items-center bg-gray-100 mx-2"  id="search-result" hx-swap="beforeend" hx-swap-oob="beforeend">
+
     </div>
 
     <section class="w-full flex flex-col items-center mt-[75px]">
@@ -43,5 +49,34 @@
 
         {{end}}
     </section>
+
+
+    <div id="target"></div>
+<script>
+    const settingTab= document.getElementById("setting-tab")
+    const chevron= document.getElementById("chevron")
+
+    function toggleSetting(){
+        settingTab.classList.toggle("hidden")
+        chevron.classList.toggle("rotate-90")
+    }
+
+
+    function cleanSearchResult(){
+        const searchResult =document.getElementById("search-result")
+        searchResult.innerHTML=""
+    }
+
+    function preventSubmit(event){
+        event.preventDefault()
+    }
+
+    function openMessage(e){
+        e.classList.toggle("hidden")
+    }
+
+</script>
+
 </body>
+
 </html>

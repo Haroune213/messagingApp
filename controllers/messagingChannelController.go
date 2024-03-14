@@ -51,8 +51,11 @@ func GetChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 
 			pageData := &structs.ChannelPage{
 				User:     val,
+				Link:     url,
 				Contacts: contacts,
 			}
+
+			fmt.Println(pageData.User.Username)
 
 			tmpl.Execute(w, pageData)
 		} else {

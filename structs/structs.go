@@ -20,5 +20,6 @@ type Message_channel struct {
 
 type ChannelPage struct {
 	User     User
+	Link     string
 	Contacts []Message_channel
 }

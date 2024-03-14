@@ -39,7 +39,7 @@
     </section>    
 
 
-    <section class="w-[80vw] h-[100vh]  overflow-x-hidden  relative" id="messaging-section" hx-ext="ws" ws-connect="/web"  >
+    <section class="w-[80vw] h-[100vh]  overflow-x-hidden  relative" id="messaging-section" hx-ext="ws" ws-connect="/web/{{   .Link   }}"  >
         <nav class="w-[100%] h-[55px] shadow-md shadow-slate-200  py-1 flex justify-center items-center  left-0 right-0 top-0 bg-white z-10">
             <div>
                 {{ .User.Username }} <br>

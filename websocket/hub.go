@@ -1,24 +1,5 @@
 package websocket
 
-import (
-	"sync"
-)
-
-type Message struct {
-	Client_id int    `json:"clientID"`
-	Message   string `json:"text"`
-}
-
-type Hub struct {
-	sync.RWMutex
-
-	clients    map[*Client]bool //check if clients in a chat are connected or not
-	messages   []*Message
-	brodcast   chan *Message
-	register   chan *Client
-	unregister chan *Client
-}
-
 func CreateHub() *Hub {
 	return &Hub{
 		clients:    make(map[*Client]bool),

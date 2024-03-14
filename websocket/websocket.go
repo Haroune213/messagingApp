@@ -3,37 +3,7 @@ package websocket
 import (
 	"messagingApp/middlewares"
 	"net/http"
-	"time"
-
-	"github.com/gorilla/websocket"
 )
-
-const (
-	pingPeriod     = (pongWait * 9) / 10
-	pongWait       = 10 * time.Second
-	maxMessageSize = 512
-	writeWait      = 10 * time.Second
-)
-
-type WsMessage struct {
-	Message string      `json:"message"`
-	Headers interface{} `json:"HEADERS"`
-}
-
-type Client struct {
-	user_id int
-	hub     *Hub
-	conn    *websocket.Conn
-	send    chan []byte
-}
-
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-}
 
 func WebSocket(w http.ResponseWriter, r *http.Request, hub *Hub) {
 	_, _, id := middlewares.VerifyJWT(w, r)

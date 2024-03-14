@@ -57,8 +57,10 @@ func Routing(port string, hub *websocket.Hub) {
 
 	})
 
-	http.HandleFunc("/web", func(w http.ResponseWriter, r *http.Request) {
-		controllers.ConnectSocket(w, r, hub)
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		url := extractID("ws", r.URL.Path)
+
+		controllers.ConnectSocket(w, r, hub, url)
 	})
 
 	http.ListenAndServe(port, nil)

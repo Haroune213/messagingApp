@@ -10,6 +10,7 @@ import (
 )
 
 func Routing(port string, hub *websocket.Hub) {
+	var link string
 
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "GET" {
@@ -53,14 +54,14 @@ func Routing(port string, hub *websocket.Hub) {
 
 	http.HandleFunc("/web/", func(w http.ResponseWriter, r *http.Request) {
 		url := extractID("web", r.URL.Path)
+		link = url
 		controllers.GetChatRoom(w, r, url)
 
 	})
 
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		url := extractID("ws", r.URL.Path)
 
-		controllers.ConnectSocket(w, r, hub, url)
+		controllers.ConnectSocket(w, r, hub, link)
 	})
 
 	http.ListenAndServe(port, nil)

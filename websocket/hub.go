@@ -31,7 +31,7 @@ func (h *Hub) Run() {
 			h.messages = append(h.messages, msg)
 
 			for client := range h.clients {
-				if client.user_id == msg.Client_id {
+				if client.user_id == msg.Client_id || client.link != msg.Link {
 					continue
 				}
 

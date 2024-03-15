@@ -30,6 +30,7 @@ type WsMessage struct {
 
 type Client struct {
 	user_id int
+	link    string //link of the current conversation
 	hub     *Hub
 	conn    *websocket.Conn
 	send    chan []byte
@@ -38,11 +39,11 @@ type Client struct {
 type Message struct {
 	Client_id int    `json:"clientID"`
 	Message   string `json:"text"`
+	Link      string `json: "link"`
 }
 
 type Hub struct {
 	sync.RWMutex
-	url        string
 	clients    map[*Client]bool //check if clients in a chat are connected or not
 	messages   []*Message
 	brodcast   chan *Message

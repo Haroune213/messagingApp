@@ -55,8 +55,6 @@ func GetChatRoom(w http.ResponseWriter, r *http.Request, url string) {
 				Contacts: contacts,
 			}
 
-			fmt.Println(pageData.User.Username)
-
 			tmpl.Execute(w, pageData)
 		} else {
 			http.Redirect(w, r, "http://localhost:8000/404", http.StatusSeeOther)

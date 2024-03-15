@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func (c *Client) readMessage() {
+func (c *Client) readMessage(link string) {
 	//function read the message sent from client
 	//read it from the other client
 
@@ -37,6 +37,6 @@ func (c *Client) readMessage() {
 			break
 		}
 
-		c.hub.brodcast <- &Message{Client_id: c.user_id, Message: wsMsg.Message}
+		c.hub.brodcast <- &Message{Client_id: c.user_id, Message: wsMsg.Message, Link: link}
 	}
 }

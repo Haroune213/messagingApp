@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func ConnectSocket(w http.ResponseWriter, r *http.Request, hub *websocket.Hub, url string) {
+func ConnectSocket(w http.ResponseWriter, r *http.Request, hub *websocket.Hub, link string) {
 
-	websocket.WebSocket(w, r, hub)
+	websocket.WebSocket(w, r, hub, link)
 }

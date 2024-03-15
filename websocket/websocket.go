@@ -1,11 +1,12 @@
 package websocket
 
 import (
+	"fmt"
 	"messagingApp/middlewares"
 	"net/http"
 )
 
-func WebSocket(w http.ResponseWriter, r *http.Request, hub *Hub) {
+func WebSocket(w http.ResponseWriter, r *http.Request, hub *Hub, link string) {
 	_, _, id := middlewares.VerifyJWT(w, r)
 	conn, err := upgrader.Upgrade(w, r, nil)
 
@@ -15,14 +16,17 @@ func WebSocket(w http.ResponseWriter, r *http.Request, hub *Hub) {
 
 	client := &Client{
 		user_id: id,
+		link:    link,
 		hub:     hub,
 		conn:    conn,
 		send:    make(chan []byte),
 	}
 
+	fmt.Println("Client: ", client.user_id, " link: ", client.link)
+
 	client.hub.register <- client
 
-	go client.readMessage()
+	go client.readMessage(link)
 	go client.writeMessage()
 
 }
